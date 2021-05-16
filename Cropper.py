@@ -5,7 +5,7 @@ import os
 stringGetPathDir = 'please enter the image path.\nFor example: D:\\Image\n'
 stringGetImage = 'please enter the image name.\nFor example: MyAvatar.png\n'
 stringGetPathDirFail = 'Folder path is wrong, please check again!\n'
-stringGetImageFail = 'Image fail name is wrong, please check again!\n'
+stringGetImageFail = 'Image file name is wrong, please check again!\n'
 
 stringJudgeSquareFail = 'The image is not square and will be cropped.\n\
 Enter \'Y\' to continue.\n'
