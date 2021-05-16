@@ -1,11 +1,10 @@
 from PIL import Image
 from os import path
 import os
+import tkinter
+from tkinter import filedialog
 
-stringGetPathDir = 'please enter the image path.\nFor example: D:\\Image\n'
-stringGetImage = 'please enter the image name.\nFor example: MyAvatar.png\n'
-stringGetPathDirFail = 'Folder path is wrong, please check again!\n'
-stringGetImageFail = 'Image file name is wrong, please check again!\n'
+stringGetPath = 'Please select your image'
 
 stringJudgeSquareFail = 'The image is not square and will be cropped.\n\
 Enter \'Y\' to continue.\n'
@@ -82,28 +81,13 @@ def getLineWidth():
 
 
 def getPathDir():
-    string = input(stringGetPathDir)
-    return path.dirname(addBar(string))
+    return input(stringGetPath)
 
 
 def addBar(string: str):
     if string[:-2] != '\\':
         string += '\\'
         return string
-
-
-def getImage():
-    return input(stringGetImage)
-
-
-def checkPath(pathDir: path, pathImage: path):
-    if not path.exists(pathDir):
-        print(stringGetPathDirFail)
-        return False
-    if not path.isfile(pathImage):
-        print(stringGetImageFail)
-        return False
-    return True
 
 
 def checkLineWidth(linewidth: int, radius: float):
@@ -117,13 +101,13 @@ def checkLineWidth(linewidth: int, radius: float):
 
 
 while True:
-    acquiredPathSuccess = False
-    while not acquiredPathSuccess:
-        pathDir = getPathDir()
-        strImageName = getImage()
-        pathImage = path.join(pathDir, strImageName)
-
-        acquiredPathSuccess = checkPath(pathDir, pathImage)
+    root = tkinter.Tk()
+    root.withdraw()
+    pathImage = filedialog.askopenfilename(
+        initialdir="/",
+        title=stringGetPath,
+        filetypes=(("jpg files", "*.jpg"), ("png files", "*.png")),
+    )
 
     image = currentImage(pathImage)
     if not image.judgeSquare():
