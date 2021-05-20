@@ -39,6 +39,7 @@ class currentImage:
                                     (255, 255, 255, 0))
 
     def getTargetRadius(self, lineWidth: int):
+        self.lineWidth = lineWidth
         self.targetRadius = self.radius - lineWidth
 
     def getPoint(self):
@@ -59,6 +60,16 @@ class currentImage:
                 distance = pow((pow(x, 2) + pow(y, 2)), 0.5)  # 勾股定理
                 if distance < self.targetRadius:
                     pTargetImage[i, j] = pSourceImage[i, j]
+                if distance < self.radius and distance >= self.targetRadius:
+                    tem = list(pSourceImage[i, j])
+                    colorPerPx = 255/self.lineWidth
+                    px = distance - self.targetRadius
+                    for t in range(3):
+                        '''tem[t] += int(colorPerPx * px)'''
+                        if tem[t] > 255:
+                            tem[t] = 255
+                    tem[3] -= int(colorPerPx * px)
+                    pTargetImage[i, j] = tuple(tem)
         self.save()
 
     def save(self):
