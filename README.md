@@ -1,11 +1,13 @@
 # Crop-to-round-image-with-borders
 Crop to round image with borders
 
-1. Browse this address to download the exe.
-https://github.com/Uwwal/Crop-to-round-image-with-transparent-borders/releases/download/1.2/Cropper.exe
+1. browse this address to download the exe.
+https://github.com/Uwwal/Crop-to-round-image-with-borders/releases/download/1.3/Cropper.exe
 2. select your image(Preferably square, Otherwise it will be deformed).
 3. input the borders width.
 4. wait.
+
+ps:i recommend you use the recommended width in step 3
 
 effect:
 
