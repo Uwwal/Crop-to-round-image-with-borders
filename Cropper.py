@@ -11,7 +11,9 @@ Enter \'Y\' to continue.\n'
 
 stringExit = 'Enter any key to exit...\n'
 
-stringGetLineWidth = 'please enter the transparent circle width.\n'
+stringGetLineWidth = 'please enter the border width.\n'
+stringImageSize = '(image width = {0}, image height = {1},\
+ recommended width = {2}.)\n'
 
 stringTargetFileName = 'target'
 stringTargetFormat = '.png'
@@ -38,17 +40,16 @@ class currentImage:
         self.targetFile = Image.new('RGBA', (self.length, self.length),
                                     (255, 255, 255, 0))
 
-    def getTargetRadius(self, lineWidth: int):
-        self.lineWidth = lineWidth
-        self.targetRadius = self.radius - lineWidth
+    def getTargetRadius(self):
+        self.targetRadius = self.radius - self.lineWidth
 
     def getPoint(self):
         self.point = self.radius
 
-    def cut(self, lineWidth: int):
+    def cut(self):
         self.getPoint()
         self.createNewCircle()
-        self.getTargetRadius(lineWidth)
+        self.getTargetRadius()
 
         pSourceImage = self.file.load()
         pTargetImage = self.targetFile.load()
@@ -62,7 +63,7 @@ class currentImage:
                     pTargetImage[i, j] = pSourceImage[i, j]
                 if distance < self.radius and distance >= self.targetRadius:
                     tem = list(pSourceImage[i, j])
-                    colorPerPx = 255/self.lineWidth
+                    colorPerPx = 255 / self.lineWidth
                     px = distance - self.targetRadius
                     for t in range(3):
                         '''tem[t] += int(colorPerPx * px)'''
@@ -86,9 +87,12 @@ class currentImage:
 
         self.targetFile.save(temPath)
 
-
-def getLineWidth():
-    return int(eval(input(stringGetLineWidth)))
+    def getLineWidth(self):
+        print(stringGetLineWidth, end='')
+        print(stringImageSize.format(self.file.width, self.file.height,
+                                     int(self.height / 10)),
+              end='')
+        self.lineWidth = int(eval(input('')))
 
 
 def getPathDir():
@@ -101,7 +105,7 @@ def addBar(string: str):
         return string
 
 
-def checkLineWidth(linewidth: int, radius: float):
+def checkLineWidth(lineWidth: int, radius: float):
     if lineWidth < 0:
         print()
         return False
@@ -129,11 +133,11 @@ while True:
 
     acquiredPathSuccess = False
     while not acquiredPathSuccess:
-        lineWidth = getLineWidth()
+        image.getLineWidth()
 
-        acquiredPathSuccess = checkLineWidth(lineWidth, image.radius)
+        acquiredPathSuccess = checkLineWidth(image.lineWidth, image.radius)
 
-    image.cut(lineWidth)
+    image.cut()
     print(stringExit)
     os.system('pause')
     exit(0)
