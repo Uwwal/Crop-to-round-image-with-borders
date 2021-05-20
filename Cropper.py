@@ -90,7 +90,7 @@ class currentImage:
     def getLineWidth(self):
         print(stringGetLineWidth, end='')
         print(stringImageSize.format(self.file.width, self.file.height,
-                                     int(self.height / 10)),
+                                     int(self.length / 10)),
               end='')
         self.lineWidth = int(eval(input('')))
 
